@@ -2,7 +2,6 @@ const { Empresa } = require('../DataBase');
 
 const createEmpresaController = async (data) => {
     try {
-        console.log("Controller ", data)
         const existEmpresa = await Empresa.findOne();
         if (!existEmpresa) {
             const newEmpresa = await Empresa.create(data);

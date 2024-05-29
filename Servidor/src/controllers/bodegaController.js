@@ -30,7 +30,6 @@ const updateBodegaController = async (id, data) => {
                 id: `${id}` 
             }
         })
-        console.log()
         return updateBodega
     } catch (error) {
         throw new Error(`Error al actualizar la información de la bodega, ${error.message}`);
