@@ -1,0 +1,19 @@
+const { DataTypes } = require('sequelize');
+
+module.exports = (sequelize) => {
+    sequelize.define('Sessions', {
+    sid: {
+        type: DataTypes.STRING,
+        primaryKey: true
+    },
+    expires: {
+        type: DataTypes.DATE
+    },
+    data: {
+        type: DataTypes.TEXT
+    }
+}, {
+    tableName: 'Sessions', // Nombre de la tabla en la base de datos
+    timestamps: false // Desactivar los campos de timestamp (createdAt, updatedAt)
+});
+}
