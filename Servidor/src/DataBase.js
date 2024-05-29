@@ -46,12 +46,12 @@ sequelize.models = Object.fromEntries(capsEntries);
 console.log(sequelize.models);
 
 // Destructuring de los modelos
-const { Users, ClientInfo, Rol, /*Sessions,*/ Empresa, Bodega, FacturacionData, PreAlerta } = sequelize.models;
+const { Users, UserInfo, Rol, /*Sessions,*/ Empresa, Bodega, FacturacionData, PreAlerta } = sequelize.models;
 // Aca vendrian las relaciones
 // En tu modelo de Users
-Users.hasOne(ClientInfo, { foreignKey: 'userId' });
+Users.hasOne(UserInfo, { foreignKey: 'userId' });
 // En tu modelo de ClientInfo
-ClientInfo.belongsTo(Users, { foreignKey: 'userId' });
+UserInfo.belongsTo(Users, { foreignKey: 'userId' });
 // En tu modelo de Users
 Users.hasOne(FacturacionData, { foreignKey: 'userId' });
 // En tu modelo de FacturacionData
