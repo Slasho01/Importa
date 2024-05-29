@@ -15,5 +15,5 @@ router.use("/api/users/role",  roleRoute);
 router.use("/api/login", loginRoute);
 router.use("/api/bodega", requireAuthA, bodegaRoute);
 router.use("/api/empresa", requireAuthA, empresaRoute);
-router.use("/api/userinfo", requireAuthA, userInfoRoute);
+router.use("/api/userinfo", requireAuthM, userInfoRoute);
 module.exports = router;

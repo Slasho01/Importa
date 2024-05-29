@@ -44,7 +44,7 @@ const requireAuthM = (req, res, next) => {
         const userRole = req.user.role;
 
         // Si el usuario tiene el rol adecuado, continuar con la siguiente función de middleware
-        if (userRole === "Cliente") {
+        if (userRole === "Cliente" || userRole === "Operador") {
           next();
         } else {
           res
