@@ -8,14 +8,17 @@ const createUserInfoController = async (data) => {
 
     if (existingUserInfo) {
       // Si UserInfo ya existe, actualizarlo
-      return await updateUserInfoController(existingUserInfo.id, data);
+      throw new Error(
+        `ya existe informacion registrada`
+      );
+      //return await updateUserInfoController(existingUserInfo.id, data);
     } else {
       // Si UserInfo no existe, crear uno nuevo
       return await UserInfo.create(data);
     }
   } catch (error) {
     throw new Error(
-      `Error al añadir o actualizar la información del usuario, ${error.message}`
+      `Error al añadir la información del usuario, ${error.message}`
     );
   }
 };
@@ -34,7 +37,8 @@ const updateUserInfoController = async (id, data) => {
       return "informacion actualizada correctamente"; // Otra indicación de que la actualización fue exitosa
     } else {
       // Si no existe, enviar a crear
-      return await createUserInfoController(data);
+      //return await createUserInfoController(data);
+      throw new Error('no existen registro')
     }
   } catch (error) {
     throw new Error(`Error al actualizar la información del usuario, ${error.message}`);
