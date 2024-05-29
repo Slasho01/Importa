@@ -44,7 +44,16 @@ const updateUserInfoController = async (id, data) => {
     throw new Error(`Error al actualizar la información del usuario, ${error.message}`);
   }
 };
+const getUserInfoByIdController = async(id) =>{
+    try {
+        const userInfoById = UserInfo.findByPk(id);
+        return userInfoById
+    } catch (error) {
+        throw new Error(`Error al obtener la información del usuario, ${error.message}`);
+    }
+}
 module.exports = {
   createUserInfoController,
   updateUserInfoController,
+  getUserInfoByIdController
 };

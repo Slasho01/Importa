@@ -1,11 +1,14 @@
 const { Router } = require("express");
 const {
     createuserInfoHandler,
-    updateUserInfohandler
+    updateUserInfohandler,
+    getUserInfoByIdHandler
 } = require('../handlers/userInfoHandler')
 const userInfoRouter = Router();
+const { requireAuthID } = require('../utils/auth')
 
-userInfoRouter.post("/", createuserInfoHandler);
-userInfoRouter.put("/:id", updateUserInfohandler);
+userInfoRouter.post("/",requireAuthID, createuserInfoHandler);
+userInfoRouter.put("/:id",requireAuthID, updateUserInfohandler);
+userInfoRouter.get("/:id",requireAuthID, getUserInfoByIdHandler);
 
 module.exports = userInfoRouter;
