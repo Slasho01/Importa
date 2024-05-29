@@ -37,8 +37,17 @@ const updateBodegaController = async (id, data) => {
     }
 }
 
+const deleteBodegaController = async (id) => {
+    try {
+        const deleteBodega = await Bodega.destroy({where: {id} });
+        return deleteBodega
+    } catch (error) {
+        throw new Error(`Error al eliminar la información de la bodega, ${error.message}`);
+    }
+}
 module.exports = {
     createBodegaController, 
     updateBodegaController,
-    getBodegaController
+    getBodegaController,
+    deleteBodegaController
 }
