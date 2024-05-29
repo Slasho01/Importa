@@ -1,5 +1,13 @@
 const { Bodega } = require('../DataBase');
 
+const getBodegaController = async () =>{
+    try {
+        const getBodega = await Bodega.findAll()
+        return getBodega
+    } catch (error) {
+        throw new Error(`Error al obtener las bodegas ${error.message}`);
+    }
+}
 const createBodegaController = async (data) => {
     try {
         const existBodega = await Bodega.findAll();
@@ -14,6 +22,23 @@ const createBodegaController = async (data) => {
     }
 };
 
+const updateBodegaController = async (id, data) => {
+    const {name, address, city, country, image_url} = data
+    try {
+        const updateBodega = Bodega.update({name: name, address: address, city: city, country: country, image_url: image_url}, {
+            where:{
+                id: `${id}` 
+            }
+        })
+        console.log()
+        return updateBodega
+    } catch (error) {
+        throw new Error(`Error al actualizar la información de la bodega, ${error.message}`);
+    }
+}
+
 module.exports = {
-    createBodegaController
+    createBodegaController, 
+    updateBodegaController,
+    getBodegaController
 }

@@ -2,6 +2,7 @@ const { createUserController } = require('../controllers/userController')
 
 const createUserHandler = async (req, res) => {
     const { username, password, email } = req.body;
+    console.log(username, password, email)
     const roldefault = 1
     try {
       if (!username || typeof username !== "string" || username.trim() === "") {
