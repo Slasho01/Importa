@@ -8,7 +8,7 @@ const createFacturacionDataController = async (data) => {
     if (existFacturaData) {
       throw new Error("Ya hay informacion registrada");
     } else {
-      return await FacturacionData.crete(data);
+      return await FacturacionData.create(data);
     }
   } catch (error) {
     throw new Error(
@@ -18,25 +18,29 @@ const createFacturacionDataController = async (data) => {
 };
 
 const updateFacturacionDataController = async (id, data) => {
-  const {} = data;
+  const { name, rut, address, userId } = data;
   try {
-    const existFacturacionData = FacturacionData.findOne({
+    const existFacturacionData = await FacturacionData.findOne({
       where: { userId: userId },
     });
     if (existFacturacionData) {
-      await FacturacionData.update({}, { where: { id } });
+      await FacturacionData.update({name: name, rut: rut, address:address}, { where: { id } });
       return "Informacion de facturacion actualizzada";
     } else {
       throw new Error(
         `No se encontro informacion de facturacion registrada ${error.message}`
       );
     }
-  } catch (error) {}
+  } catch (error) {
+    throw new Error(`Error al actualizar la información de facturacion, ${error.message}`);
+  }
 };
 
-const getFacturacionDataController = async (id) => {
+const getFacturacionDataController = async (userId) => {
   try {
-    const getFacturacionData = FacturacionData.findByPk(id);
+    const getFacturacionData = await FacturacionData.findOne({
+      where: { userId: userId },
+    });
     return getFacturacionData;
   } catch (error) {
     throw new Error(
@@ -46,7 +50,7 @@ const getFacturacionDataController = async (id) => {
 };
 
 module.exports = {
-    createFacturacionDataController,
+  createFacturacionDataController,
   updateFacturacionDataController,
   getFacturacionDataController,
 };
