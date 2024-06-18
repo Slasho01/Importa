@@ -71,9 +71,9 @@ const requireAuthID = (req, res, next) => {
 
         // Obtener el ID de usuario del token decodificado
         const userId = req.user.userId;
-        console.log(userId)
         // Obtener el ID de usuario de la solicitud
         const requestedUserId = req.body.userId; // Assuming userId is in the body
+        console.log(userId, " con ", requestedUserId)
 
         // Verificar si el ID de usuario de la solicitud coincide con el ID de usuario del token
         if (userId === requestedUserId) {

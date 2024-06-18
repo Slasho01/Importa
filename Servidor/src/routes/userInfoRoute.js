@@ -7,8 +7,8 @@ const {
 const userInfoRouter = Router();
 const { requireAuthID } = require('../utils/auth')
 
-userInfoRouter.post("/",requireAuthID, createuserInfoHandler);
-userInfoRouter.put("/:id",requireAuthID, updateUserInfohandler);
-userInfoRouter.get("/:id",requireAuthID, getUserInfoByIdHandler);
+userInfoRouter.post("/", requireAuthID, createuserInfoHandler);
+userInfoRouter.put("/:id", requireAuthID, updateUserInfohandler);
+userInfoRouter.get("/:id", requireAuthID, getUserInfoByIdHandler);
 
 module.exports = userInfoRouter;
