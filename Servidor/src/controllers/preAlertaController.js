@@ -29,7 +29,45 @@ const getPreAlertaDetailsController = async (id) => {
   }
 };
 
+const createPreAlertaController = async (data) => {
+  try {
+    const createPrealerta = await PreAlerta.create(data);
+    return createPrealerta;
+  } catch (error) {
+    throw new Error(`Error al crear la PreAlerta: ${error.message}`);
+  }
+};
+
+const updatePreAlertaController = async (id, data) => {
+  const { date, origen, destino, peso, volumen, status } = data;
+  try {
+    const updatePrealerta = PreAlerta.update(
+      {
+        date: date,
+        origen: origen,
+        destino: destino,
+        peso: peso,
+        volumen: volumen,
+        status: status,
+      },
+      {
+        where: {
+          id: `${id}`,
+        },
+      }
+    );
+    if (updatePrealerta[0] === 0) {
+        throw new Error(`No se encontró ninguna Pre-Alerta con el ID ${id} para actualizar.`);
+      }
+    return updatePrealerta
+  } catch (error) {
+    throw new Error(`Error al actualizar la informacion; ${error.message}`);
+  }
+};
+
 module.exports = {
   getPreAlertaByUserController,
-  getPreAlertaDetailsController
+  getPreAlertaDetailsController,
+  createPreAlertaController,
+  updatePreAlertaController
 };

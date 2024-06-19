@@ -31,7 +31,9 @@ const requireAuthA = (req, res, next) => {
 
 const requireAuthM = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
-
+//Aun faltan validaciones con respecto a cirtas cosas por ejemplo
+//se puede ver la info de la data que quiera como por ejemplo
+//en userInfo
   if (token) {
     jwt.verify(token, JWT_KEY, (err, decodedToken) => {
       if (err) {
