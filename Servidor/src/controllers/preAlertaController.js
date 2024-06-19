@@ -32,7 +32,7 @@ const getPreAlertaDetailsController = async (id) => {
 const createPreAlertaController = async (data) => {
   try {
     const createPrealerta = await PreAlerta.create(data);
-    return createPrealerta;
+    return "Se creo exitosamente la Pre-Alerta";
   } catch (error) {
     throw new Error(`Error al crear la PreAlerta: ${error.message}`);
   }
@@ -40,6 +40,7 @@ const createPreAlertaController = async (data) => {
 
 const updatePreAlertaController = async (id, data) => {
   const { date, origen, destino, peso, volumen, status } = data;
+  console.log(date, origen, destino, peso, volumen, status)
   try {
     const updatePrealerta = await PreAlerta.update(
       {
@@ -53,10 +54,10 @@ const updatePreAlertaController = async (id, data) => {
       {
         where: {
           id,
-        },
+        }
       }
     );
-    return updatePrealerta;
+    return "Pre-Alerta Actualizada";
   } catch (error) {
     throw new Error(`Error al actualizar la informacion; ${error.message}`);
   }

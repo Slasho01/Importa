@@ -38,7 +38,7 @@ const createPreAlertaHandler = async (req, res) => {
 
 const updatePreAlertaHandler = async (req, res) => {
     const { id } = req.params;
-    const { data } = req.body;
+    const data = req.body;
     try {
         const response = await updatePreAlertaController(id, data);
         res.status(200).json(response);
