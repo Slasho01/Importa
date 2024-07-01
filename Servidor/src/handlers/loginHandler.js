@@ -3,7 +3,7 @@ const { login } = require('../controllers/loginController'); // Importa la funci
 const loginHandler = async (req, res) => {
     try {
         const { username, password } = req.body;
-        const { user, token } = await login(username, password);
+        const { token } = await login(username, password);
         res.json({ token });
     } catch (error) {
         res.status(400).json({ error: error.message });
