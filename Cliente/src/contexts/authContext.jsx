@@ -1,8 +1,11 @@
-import React, { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 const AuthContext = createContext();
+
 export const useAuth = () => useContext(AuthContext);
+
 export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(null);
     const [error, setError] = useState(null);
@@ -11,16 +14,16 @@ export const AuthProvider = ({ children }) => {
         try {
             const response = await axios.post('/api/login', { username, password });
             const token = response.data.token;
+            localStorage.setItem('token', token);
             setToken(token);
-            // Guardar el token en localStorage o en una cookie si es necesario para mantener la sesión
         } catch (error) {
-            setError(error.response.data.error);
+            setError(error.response?.data?.error || 'Login failed');
         }
     };
 
     const logout = () => {
+        localStorage.removeItem('token');
         setToken(null);
-        // Limpiar localStorage o cookie cuando el usuario cierre sesión
     };
 
     return (
@@ -29,3 +32,9 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
+
+AuthProvider.propTypes = {
+    children: PropTypes.node.isRequired,
+};
+
+export default AuthContext;
