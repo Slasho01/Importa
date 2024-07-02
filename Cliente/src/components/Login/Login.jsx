@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAuth } from "../../contexts/authContext";
+import { useAuth } from '../../contexts/authContext';
 import { Navigate } from "react-router-dom";
 
 const Login = () => {
@@ -10,6 +10,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await login(username, password);
+    // No necesitas almacenar el resultado de login en una variable extra (const hola = await login(username, password);)
   };
 
   if (token) {
@@ -27,6 +28,8 @@ const Login = () => {
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            aria-required="true"
+            aria-label="Username"
           />
         </div>
         <div>
@@ -36,10 +39,12 @@ const Login = () => {
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            aria-required="true"
+            aria-label="Password"
           />
         </div>
         <button type="submit">Login</button>
-        {error && <p>{error}</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
       </form>
     </div>
   );

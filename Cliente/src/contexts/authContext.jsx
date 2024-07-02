@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -10,9 +10,17 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(null);
     const [error, setError] = useState(null);
 
+    useEffect(() => {
+        const storedToken = localStorage.getItem('token');
+        if (storedToken) {
+            setToken(storedToken);
+        }
+    }, []);
+
     const login = async (username, password) => {
+        setError(null);  // Clear previous errors
         try {
-            const response = await axios.post('/api/login', { username, password });
+            const response = await axios.post('http://localhost:3001/api/login', { username, password });
             const token = response.data.token;
             localStorage.setItem('token', token);
             setToken(token);
