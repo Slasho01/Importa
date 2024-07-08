@@ -1,6 +1,8 @@
+// src/contexts/AuthContext.js
+
 import { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import { loginService, logoutService } from '../services/authServices'; // Importa el servicio de autenticación
 
 const AuthContext = createContext();
 
@@ -10,18 +12,26 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(null);
     const [error, setError] = useState(null);
 
+    const isTokenExpired = (token) => {
+        if (!token) return true;
+        const { exp } = JSON.parse(atob(token.split('.')[1]));
+        return Date.now() >= exp * 1000;
+    };
+
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
-        if (storedToken) {
+        if (storedToken && !isTokenExpired(storedToken)) {
             setToken(storedToken);
+        } else {
+            localStorage.removeItem('token');
         }
     }, []);
 
     const login = async (username, password) => {
-        setError(null);  // Clear previous errors
+        setError(null);
         try {
-            const response = await axios.post('http://localhost:3001/api/login', { username, password });
-            const token = response.data.token;
+            const data = await loginService(username, password);
+            const { token } = data;
             localStorage.setItem('token', token);
             setToken(token);
         } catch (error) {
@@ -30,9 +40,21 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logout = () => {
-        localStorage.removeItem('token');
+        logoutService();
         setToken(null);
     };
+
+    useEffect(() => {
+        if (token) {
+            const tokenCheckInterval = setInterval(() => {
+                if (isTokenExpired(token)) {
+                    logout();
+                }
+            }, 1000 * 60); // Verifica cada minuto
+
+            return () => clearInterval(tokenCheckInterval);
+        }
+    }, [token]);
 
     return (
         <AuthContext.Provider value={{ token, error, login, logout }}>

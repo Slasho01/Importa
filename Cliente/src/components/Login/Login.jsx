@@ -1,3 +1,5 @@
+// src/components/Login.js
+
 import React, { useState } from "react";
 import { useAuth } from '../../contexts/authContext';
 import { Navigate } from "react-router-dom";
@@ -10,7 +12,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await login(username, password);
-    // No necesitas almacenar el resultado de login en una variable extra (const hola = await login(username, password);)
   };
 
   if (token) {
