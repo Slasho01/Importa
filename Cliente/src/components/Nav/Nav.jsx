@@ -33,13 +33,13 @@ const CustomNavbar = () => {
                             Inicio
                         </Link>
                         <Link to='/productos' className='text-gray-700 hover:text-salmon-600'>
-                            Productos
-                        </Link>
-                        <Link to='/servicios' className='text-gray-700 hover:text-salmon-600'>
                             Servicios
                         </Link>
+                        <Link to='/servicios' className='text-gray-700 hover:text-salmon-600'>
+                            Calculadora
+                        </Link>
                         <Link to='/contacto' className='text-gray-700 hover:text-salmon-600'>
-                            Contacto
+                            Contactanos
                         </Link>
                         {token ? (
                             <div className='relative'>
@@ -57,7 +57,7 @@ const CustomNavbar = () => {
                             </div>
                         ) : (
                             <Link to='/login'>
-                                <button className='bg-transparent border border-gray-700 text-gray-700 hover:bg-gray-700 hover:text-white px-4 py-2 rounded-md'>
+                                <button className='bg-transparent border border-gray-700 text-gray-700 hover:bg-gray-700 hover:text-white px-4 py-1 rounded-md'>
                                     Login
                                 </button>
                             </Link>

@@ -19,7 +19,9 @@
     "react-redux": "^9.1.2",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.24.0",
+    "react-slick": "^0.30.2",
     "redux": "^5.0.1",
+    "slick-carousel": "^1.8.1",
     "tailwindcss": "^3.4.4"
   },
   "devDependencies": {
