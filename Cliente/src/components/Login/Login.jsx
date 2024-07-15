@@ -25,12 +25,13 @@ const Login = () => {
           {/* Primer div */}
           <div className='bg-hero-pattern bg-cover bg-center p-8 rounded-l-3xl py-8 px-8 w-full sm:max-w-md space-y-8 transform hover:-translate-y-1 hover:shadow-2xl transition duration-300 ease-in-out'>
             <div>
-              <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>Importa Seguro LTDA</h2>
+             <h2 className='mt-6 text-center text-3xl font-extrabold font-sans text-gray-900'>Importa seguro Ltda</h2>
+             {/*<img src="./src/assets/pngegg.png" className='shadow-xl items-center content-center'/>*/}
             </div>
           </div>
 
           {/* Segundo div */}
-          <div className='bg-gray-400/50 p-8 rounded-r-3xl py-8 px-8 w-full sm:max-w-md space-y-8 transform hover:translate-y-1 hover:shadow-2xl transition duration-300 ease-in-out'>
+          <div className='bg-golden-sand-500/50 dark:bg-gray-400/50 p-8 rounded-r-3xl py-8 px-8 w-full sm:max-w-md space-y-8 transform hover:translate-y-1 hover:shadow-2xl transition duration-300 ease-in-out'>
             <div>
               <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>Acceso Clientes</h2>
             </div>
@@ -54,7 +55,7 @@ const Login = () => {
                     type='text'
                     autoComplete='username'
                     required
-                    placeholder='Username'
+                    placeholder='Usuario'
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                   />
@@ -67,7 +68,7 @@ const Login = () => {
                     type='password'
                     autoComplete='current-password'
                     required
-                    placeholder='Password'
+                    placeholder='Contraseña'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
@@ -83,19 +84,19 @@ const Login = () => {
                     className='h-4 w-4 text-salmon-600 focus:ring-salmon-500 border-gray-300 rounded'
                   />
                   <label htmlFor='remember-me' className='ml-2 block text-sm text-gray-900'>
-                    Remember me
+                    Recordarme
                   </label>
                 </div>
 
                 <div className='text-sm'>
                   <a href='#' className='font-medium text-salmon-600 hover:text-salmon-500'>
-                    Forgot your password?
+                    recupera tu contraseña
                   </a>
                 </div>
               </div>
 
               <div>
-                <Button type='submit'>Sign in</Button>
+                <Button type='submit'>Ingresar</Button>
               </div>
             </form>
           </div>

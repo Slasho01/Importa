@@ -19,21 +19,21 @@ const Carousel = () => {
       <Slider {...settings}>
       <div className="px-4">
           <img
-            src="https://via.placeholder.com/800x400"
+            src="https://sanantoniofotos.cl/wp-content/uploads/2023/08/212af5d3-7aa2-404f-bf7f-783437297538-702x336.jpg"
             alt="Slide 1"
             className="w-full h-96 object-cover"
           />
         </div>
         <div className="px-4">
           <img
-            src="https://via.placeholder.com/800x400"
+            src="http://tdinteriorsinc.com/wp-content/uploads/2013/03/landscape-7-800x400.jpg"
             alt="Slide 2"
             className="w-full h-96 object-cover"
           />
         </div>
         <div className="px-4">
           <img
-            src="https://via.placeholder.com/800x400"
+            src="http://tdinteriorsinc.com/wp-content/uploads/2013/03/landscape-7-800x400.jpg"
             alt="Slide 3"
             className="w-full h-96 object-cover"
           />

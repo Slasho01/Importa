@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/authContext'; // Importa el contexto de autenticación
+import { useTheme } from '../../contexts/themeContext';
 
 const CustomNavbar = () => {
     const { token, logout } = useAuth();
+    const { isDarkMode, toggleDarkMode } = useTheme();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -20,7 +22,7 @@ const CustomNavbar = () => {
     };
 
     return (
-        <nav className='bg-white border-b border-gray-200 fixed w-full top-0 z-10'>
+        <nav className={`bg-golden-sand-600 border-b border-golden-sand-400 fixed w-full top-0 z-10 ${isDarkMode ? 'dark:bg-gray-800 dark:border-gray-600' : ''}`}>
             <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
                 <div className='flex justify-between items-center py-3'>
                     <div className='flex-shrink-0'>
@@ -29,18 +31,36 @@ const CustomNavbar = () => {
                         </Link>
                     </div>
                     <div className='hidden md:flex space-x-4 ml-auto'>
-                        <Link to='/' className='text-gray-700 hover:text-salmon-600'>
+                        <Link to='/' className='text-gray-950 hover:text-gray-500 text-xl'>
                             Inicio
                         </Link>
-                        <Link to='/productos' className='text-gray-700 hover:text-salmon-600'>
+                        <Link to='/Servicios' className='text-gray-950 hover:text-gray-500 text-xl'>
                             Servicios
                         </Link>
-                        <Link to='/servicios' className='text-gray-700 hover:text-salmon-600'>
-                            Calculadora
+                        <Link to='/Calculadora' className='text-gray-950 hover:text-gray-500 text-xl'>
+                            Cotizar
                         </Link>
-                        <Link to='/contacto' className='text-gray-700 hover:text-salmon-600'>
+                        <Link to='/Calculadora' className='text-gray-950 hover:text-gray-500 text-xl'>
+                            Nosotros
+                        </Link>
+                        <Link to='/Contactanos' className='text-gray-950 hover:text-gray-500 text-xl'>
                             Contactanos
                         </Link>
+                            <button
+                                className={`p-2 rounded-full ${isDarkMode ? 'bg-gray-800 text-gray-300' : 'bg-yellow-300 text-yellow-900'} dark:bg-gray-600 dark:text-gray-200 focus:outline-none`}
+                                onClick={toggleDarkMode}
+                            >
+                                {isDarkMode ? (
+                                    <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M16 12a4 4 0 11-8 0 4 4 0 018 0z' />
+                                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M12 6v6m0 0v6m0-6h6m-6 0H6' />
+                                    </svg>
+                                ) : (
+                                    <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M12 6v6m0 0v6m0-6h6m-6 0H6' />
+                                    </svg>
+                                )}
+                            </button>
                         {token ? (
                             <div className='relative'>
                                 <button onClick={toggleDropdown} className='text-gray-700 hover:text-salmon-600 focus:outline-none'>
@@ -57,12 +77,13 @@ const CustomNavbar = () => {
                             </div>
                         ) : (
                             <Link to='/login'>
-                                <button className='bg-transparent border border-gray-700 text-gray-700 hover:bg-gray-700 hover:text-white px-4 py-1 rounded-md'>
-                                    Login
+                                <button className='bg-transparent  text-gray-950  hover:border hover:border-golden-sand-700 hover:text-gray-500 px-4 py-1 rounded-md'>
+                                    Ingresar
                                 </button>
                             </Link>
                         )}
                     </div>
+
                     <div className='md:hidden'>
                         <button onClick={toggleMenu} className='text-gray-700 hover:text-salmon-600 focus:outline-none'>
                             <svg className='h-6 w-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
@@ -78,6 +99,21 @@ const CustomNavbar = () => {
                             <Link to='/productos' className='block px-3 py-2 text-gray-700 hover:bg-gray-100'>Productos</Link>
                             <Link to='/servicios' className='block px-3 py-2 text-gray-700 hover:bg-gray-100'>Servicios</Link>
                             <Link to='/contacto' className='block px-3 py-2 text-gray-700 hover:bg-gray-100'>Contacto</Link>
+                            <button
+                                className={`p-2 rounded-full ${isDarkMode ? 'bg-gray-800 text-gray-300' : 'bg-yellow-300 text-yellow-900'} dark:bg-gray-600 dark:text-gray-200 focus:outline-none`}
+                                onClick={toggleDarkMode}
+                            >
+                                {isDarkMode ? (
+                                    <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M16 12a4 4 0 11-8 0 4 4 0 018 0z' />
+                                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M12 6v6m0 0v6m0-6h6m-6 0H6' />
+                                    </svg>
+                                ) : (
+                                    <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+                                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M12 6v6m0 0v6m0-6h6m-6 0H6' />
+                                    </svg>
+                                )}
+                            </button>
                             {token ? (
                                 <>
                                     <Link to='/perfil' className='block px-3 py-2 text-gray-700 hover:bg-gray-100'>Mi Perfil</Link>
@@ -86,8 +122,8 @@ const CustomNavbar = () => {
                                 </>
                             ) : (
                                 <Link to='/login'>
-                                    <button className='bg-transparent border border-gray-700 text-gray-700 hover:bg-gray-700 hover:text-white px-4 py-2 rounded-md w-full text-center'>
-                                        Login
+                                    <button className='bg-transparent text-gray-950  hover:text-gray-500 hover:border hover:border-gray-950 px-4 py-2 rounded-md w-full text-center'>
+                                    Ingresar
                                     </button>
                                 </Link>
                             )}
