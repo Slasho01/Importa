@@ -14,7 +14,7 @@ server.use(cors({
   origin: 'http://localhost:5173',
   credentials: true,
   methods: 'GET, POST, OPTIONS, PUT, DELETE',
-  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
+  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
 }));
 
 // Configuración de express.json() en lugar de bodyParser

@@ -46,7 +46,7 @@ const updateUserInfoController = async (id, data) => {
 };
 const getUserInfoByIdController = async(id) =>{
     try {
-        const userInfoById = UserInfo.findByPk(id);
+        const userInfoById = UserInfo.findOne({ where: { userId: id  } });
         return userInfoById
     } catch (error) {
         throw new Error(`Error al obtener la información del usuario, ${error.message}`);

@@ -30,34 +30,33 @@ const requireAuthA = (req, res, next) => {
 };
 
 const requireAuthM = (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1];
-//Aun faltan validaciones con respecto a cirtas cosas por ejemplo
-//se puede ver la info de la data que quiera como por ejemplo
-//en userInfo
-  if (token) {
-    jwt.verify(token, JWT_KEY, (err, decodedToken) => {
-      if (err) {
-        res.status(401).json({ error: "Token inválido" });
-      } else {
-        // Decodifica el token y lo agrega al objeto de solicitud
-        req.user = decodedToken;
-
-        // Verificar el rol del usuario
-        const userRole = req.user.role;
-
-        // Si el usuario tiene el rol adecuado, continuar con la siguiente función de middleware
-        if (userRole === "Cliente" || userRole === "Operador") {
-          next();
-        } else {
-          res
-            .status(403)
-            .json({ error: "No tienes permiso para acceder a esta ruta" });
-        }
-      }
-    });
-  } else {
-    res.status(401).json({ error: "Token de sesión no proporcionado" });
+  // Verificar si existe la cabecera de autorización y tiene el formato esperado
+  if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
+    return res.status(401).json({ error: "Token de sesión no proporcionado" });
   }
+
+  // Extraer el token de la cabecera
+  const token = req.headers.authorization.split(" ")[1];
+
+  // Verificar el token usando JWT
+  jwt.verify(token, JWT_KEY, (err, decodedToken) => {
+    if (err) {
+      return res.status(401).json({ error: "Token inválido" });
+    }
+
+    // Decodificar el token y agregarlo al objeto de solicitud
+    req.user = decodedToken;
+
+    // Verificar el rol del usuario
+    const userRole = req.user.role;
+
+    // Si el usuario tiene el rol adecuado, continuar con el siguiente middleware
+    if (userRole === "Cliente" || userRole === "Operador") {
+      next();
+    } else {
+      res.status(403).json({ error: "No tienes permiso para acceder a esta ruta" });
+    }
+  });
 };
 
 const requireAuthID = (req, res, next) => {
@@ -68,22 +67,16 @@ const requireAuthID = (req, res, next) => {
       if (err) {
         res.status(401).json({ error: "Token inválido" });
       } else {
-        // Decodifica el token y lo agrega al objeto de solicitud
         req.user = decodedToken;
-
-        // Obtener el ID de usuario del token decodificado
         const userId = req.user.userId;
-        // Obtener el ID de usuario de la solicitud
-        const requestedUserId = req.body.userId; // Assuming userId is in the body
-        console.log(userId, " con ", requestedUserId)
+        const requestedUserId = req.body.userId;
 
-        // Verificar si el ID de usuario de la solicitud coincide con el ID de usuario del token
+        console.log(userId, " con ", requestedUserId);
+
         if (userId === requestedUserId) {
           next();
         } else {
-          res
-            .status(403)
-            .json({ error: "No tienes permiso para acceder a esta ruta" });
+          res.status(403).json({ error: "No tienes permiso para acceder a esta ruta" });
         }
       }
     });

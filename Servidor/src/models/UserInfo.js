@@ -1,11 +1,12 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, UUIDV4 } = require('sequelize');
 
 module.exports = (sequelize) => {
   sequelize.define('UserInfo', {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       primaryKey: true,
-      autoIncrement: true,
+      allowNull: false,
+      defaultValue: UUIDV4
     },
     address: {
       type: DataTypes.STRING,
