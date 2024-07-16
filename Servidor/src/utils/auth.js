@@ -71,8 +71,6 @@ const requireAuthID = (req, res, next) => {
         const userId = req.user.userId;
         const requestedUserId = req.body.userId;
 
-        console.log(userId, " con ", requestedUserId);
-
         if (userId === requestedUserId) {
           next();
         } else {

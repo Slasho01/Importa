@@ -4,11 +4,14 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from 'tailwindcss';
 
 export default defineConfig({
+  build: {
+    sourcemap: true
+  },
   plugins: [
     react(),
     tailwindcss('./tailwind.config.js'),
   ],
   optimizeDeps: {
     exclude: ['jwt-decode']
-  }
+  },
 });

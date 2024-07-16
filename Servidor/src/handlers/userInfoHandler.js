@@ -7,7 +7,7 @@ const {
 const createuserInfoHandler = async (req, res) => {
   const data = req.body;
   try {
-    const response = await createUserInfoController(data);
+    await createUserInfoController(data);
     return res.status(200).json("Informacion registrada correctamente");
   } catch (error) {
     return res.status(400).json({ message: error.message });

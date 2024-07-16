@@ -6,7 +6,7 @@ const Home = () => {
     const { isDarkMode } = useTheme(); // Obtén el estado actual del modo oscuro
 
     return (
-        <div className={`flex items-center justify-center py-2 px-4 sm:px-6 lg:px-8 ${isDarkMode ? 'dark:bg-gray-900 dark:text-white' : 'bg-golden-sand-400 text-black'}`}>
+        <div className={`flex items-center justify-center py-2 px-4 sm:px-6 lg:px-8 ${isDarkMode ? 'dark:bg-gray-800 dark:text-white' : 'bg-golden-sand-400 text-black'}`}>
             <div className="container mx-auto py-8 max-w-screen-lg">
                 <Carousel />
                 <div className='mt-8 text-center'>

@@ -10,8 +10,8 @@ const createUserHandler = async (req, res) => {
           message: "El nombre es obligatorio y debe ser una cadena no vacía.",
         });
       }
-      const response = await createUserController(username, password, email, roldefault);
-      return res.status(201).json({ response, message: "Creado" });
+      await createUserController(username, password, email, roldefault);
+      return res.status(201).json({ message: "Creado" });
     } catch (error) {
       return res.status(409).json({ message: error.message });
     }

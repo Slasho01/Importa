@@ -29,8 +29,8 @@ const getPreAlertaDetailsHandler = async (req, res) => {
 const createPreAlertaHandler = async (req, res) => {
   const data = req.body;
   try {
-    const response = await createPreAlertaController(data);
-    res.status(200).json(response);
+    await createPreAlertaController(data);
+    res.status(200).json({message:"Pre-alerta creada con exito"});
   } catch (error) {
     res.status(500).json({message: error.message});
   }
@@ -40,8 +40,8 @@ const updatePreAlertaHandler = async (req, res) => {
     const { id } = req.params;
     const data = req.body;
     try {
-        const response = await updatePreAlertaController(id, data);
-        res.status(200).json(response);
+        await updatePreAlertaController(id, data);
+        res.status(200).json({message:"Pre-alerta actualizada satisfactoriamente"});
     } catch (error) {
         res.status(400).json({message: error.message});
     }

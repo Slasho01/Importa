@@ -24,14 +24,14 @@ const createUserInfoController = async (data) => {
 };
 
 const updateUserInfoController = async (id, data) => {
-  const { address, phone, rut, birth_date, userId } = data;
+  const {fullname, address, phone, rut, birth_date, userId } = data;
   try {
     // Verificar si UserInfo existe
     const userInfo = await UserInfo.findOne({ where: { userId: userId  } });
     if (userInfo) {
       // Si existe, actualizarlo
       await UserInfo.update(
-        { address, phone, rut, birth_date },
+        { fullname, address, phone, rut, birth_date },
         { where: { id } }
       );
       return "informacion actualizada correctamente"; // Otra indicación de que la actualización fue exitosa
@@ -46,7 +46,7 @@ const updateUserInfoController = async (id, data) => {
 };
 const getUserInfoByIdController = async(id) =>{
     try {
-        const userInfoById = UserInfo.findOne({ where: { userId: id  } });
+        const userInfoById = await UserInfo.findOne({ where: { userId: id  } });
         return userInfoById
     } catch (error) {
         throw new Error(`Error al obtener la información del usuario, ${error.message}`);

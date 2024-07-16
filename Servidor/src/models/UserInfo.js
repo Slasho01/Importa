@@ -8,6 +8,10 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: UUIDV4
     },
+    fullname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     address: {
       type: DataTypes.STRING,
       allowNull: false,

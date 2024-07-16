@@ -18,6 +18,6 @@ router.use("/api/login", loginRoute);
 router.use("/api/bodega", requireAuthA, bodegaRoute);
 router.use("/api/empresa", requireAuthA, empresaRoute);
 router.use("/api/userinfo", requireAuthM, userInfoRoute);
-router.use("/api/facturation", facturacionDataRoute);
-router.use("/api/prealerta", preAlertaRoute)
+router.use("/api/facturacion",requireAuthM, facturacionDataRoute);
+router.use("/api/prealerta", requireAuthM, preAlertaRoute)
 module.exports = router;

@@ -5,9 +5,10 @@ const {
     getFacturacionDataHandler
 } = require('../handlers/facturacionHandler')
 const facturacionRoute = Router();
+const { requireAuthID } = require('../utils/auth')
 
-facturacionRoute.get("/:id", getFacturacionDataHandler);
-facturacionRoute.post("/", createFacturcionDataHandler);
-facturacionRoute.put("/:id", updateFacturacionDataHandler);
+facturacionRoute.post("/:id", requireAuthID, getFacturacionDataHandler);
+facturacionRoute.post("/", requireAuthID, createFacturcionDataHandler);
+facturacionRoute.put("/:id", requireAuthID, updateFacturacionDataHandler);
 
 module.exports = facturacionRoute;

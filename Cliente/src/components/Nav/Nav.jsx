@@ -11,6 +11,9 @@ const CustomNavbar = () => {
 
     const handleLogout = () => {
         logout(); // Función para cerrar sesión
+    
+        // Redirige al usuario a la página de inicio
+        window.location.href = '/';
     };
 
     const toggleMenu = () => {
@@ -31,19 +34,19 @@ const CustomNavbar = () => {
                         </Link>
                     </div>
                     <div className='hidden md:flex space-x-4 ml-auto'>
-                        <Link to='/' className='text-gray-950 hover:text-gray-500 text-xl'>
+                        <Link to='/' className='text-gray-950 hover:text-gray-500 text-xl dark:text-gray-50 dark:hover:text-golden-sand-600'>
                             Inicio
                         </Link>
-                        <Link to='/Servicios' className='text-gray-950 hover:text-gray-500 text-xl'>
+                        <Link to='/Servicios' className='text-gray-950 hover:text-gray-500 text-xl dark:text-gray-50 dark:hover:text-golden-sand-600'>
                             Servicios
                         </Link>
-                        <Link to='/Calculadora' className='text-gray-950 hover:text-gray-500 text-xl'>
+                        <Link to='/Calculadora' className='text-gray-950 hover:text-gray-500 text-xl dark:text-gray-50 dark:hover:text-golden-sand-600'>
                             Cotizar
                         </Link>
-                        <Link to='/Calculadora' className='text-gray-950 hover:text-gray-500 text-xl'>
+                        <Link to='/Calculadora' className='text-gray-950 hover:text-gray-500 text-xl dark:text-gray-50 dark:hover:text-golden-sand-600'>
                             Nosotros
                         </Link>
-                        <Link to='/Contactanos' className='text-gray-950 hover:text-gray-500 text-xl'>
+                        <Link to='/Contactanos' className='text-gray-950 hover:text-gray-500 text-xl dark:text-gray-50 dark:hover:text-golden-sand-600'>
                             Contactanos
                         </Link>
                             <button
@@ -63,15 +66,15 @@ const CustomNavbar = () => {
                             </button>
                         {token ? (
                             <div className='relative'>
-                                <button onClick={toggleDropdown} className='text-gray-700 hover:text-salmon-600 focus:outline-none'>
+                                <button onClick={toggleDropdown} className='text-gray-950 hover:text-gray-500 text-xl dark:text-gray-50 dark:hover:text-golden-sand-600'>
                                     Mi Cuenta
                                 </button>
                                 {isDropdownOpen && (
-                                    <div className='absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20'>
-                                        <Link to='/perfil' className='block px-4 py-2 text-gray-700 hover:bg-gray-100'>Mi Perfil</Link>
-                                        <Link to='/prealertas' className='block px-4 py-2 text-gray-700 hover:bg-gray-100'>Mis Prealertas</Link>
-                                        <div className='border-t border-gray-100'></div>
-                                        <button onClick={handleLogout} className='block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100'>Logout</button>
+                                    <div className='absolute right-0 mt-2 w-48 bg-golden-sand-500 dark:bg-gray-950 rounded-md shadow-lg py-1 z-20'>
+                                        <Link to='/perfil' className='block px-4 py-2 text-gray-700 hover:bg-golden-sand-600 dark:text-gray-50 dark:hover:bg-gray-600'>Mi Perfil</Link>
+                                        <Link to='/prealertas' className='block px-4 py-2 text-gray-700 hover:bg-golden-sand-600 dark:text-gray-50 dark:hover:bg-gray-600'>Mis Prealertas</Link>
+                                        <div className='border-t border-golden-sand-400 dark:border-gray-400'></div>
+                                        <button onClick={handleLogout} className='block w-full text-left px-4 py-2 text-gray-700 hover:bg-golden-sand-600 dark:text-gray-50 dark:hover:bg-gray-600'>Logout</button>
                                     </div>
                                 )}
                             </div>

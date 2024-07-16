@@ -14,8 +14,8 @@ const getFacturacionDataHandler = async (req, res) =>{
 const createFacturcionDataHandler = async (req, res) =>{
     const data = req.body;
     try {
-        const response = await createFacturacionDataController(data);
-        return res.status(201).json(response);
+        await createFacturacionDataController(data);
+        return res.status(201).json({message: "Informazcion Creada"});
     } catch (error) {
         return res.status(401).json({message: error.message});
     }
@@ -25,9 +25,8 @@ const updateFacturacionDataHandler = async(req, res) =>{
     const data = req.body;
     const {id} = req.params;
     try {
-        const response = await updateFacturacionDataController(id, data);
-        console.log(response)
-        return res.status(200).json(response);
+        await updateFacturacionDataController(id, data);
+        return res.status(200).json({message: "Informazcion Actualizada"});
     } catch (error) {
         return res.status(401).json({message: error.message});
     }

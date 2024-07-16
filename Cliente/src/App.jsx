@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom"; // Importa Navigate para redirección
+import PrivateRoute from "./components/UI/PrivateRoute";
+import { useTheme } from './contexts/themeContext';
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import CustomNavbar from "./components/Nav/Nav";
-import { useTheme } from './contexts/themeContext';
 import EditProfile from "./components/User/InfoUser";
 
 const App = () => {
@@ -23,7 +24,12 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/perfil" element={<EditProfile />} />
+          <Route path="/perfil" element={
+            <PrivateRoute>
+              <EditProfile />
+            </PrivateRoute>
+          } />
+          {/* Redirige al login si no está autenticado */}
         </Routes>
       </div>
     </div>

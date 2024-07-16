@@ -16,7 +16,7 @@ const getBodegaHandler = async (req, res) => {
 const createBodegaHandler = async (req, res) => {
   const data = req.body;
   try {
-    const response = await createBodegaController(data);
+    await createBodegaController(data);
     return res.status(201).json("Bodega creada exitosamente!");
   } catch (error) {
     return res.status(409).json({ message: error.message });
