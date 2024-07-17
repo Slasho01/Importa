@@ -27,7 +27,7 @@ export const login = (username, password) => async (dispatch) => {
         setCookie('refreshToken', data.refreshToken);
 
         // Opcional: Guarda los tokens en localStorage
-    } catch (error) {
+    } catch (error) { 
         dispatch({ type: LOGIN_FAILURE, payload: error.message });
     }
 };
