@@ -1,7 +1,7 @@
 import axios from 'axios';
 import getUserIdFromToken from '../utils/jwtToken'; // Ajusta la ruta según donde tengas definida la función
 import { loginService, logoutService } from '../services/authServices';
-import { setCookie, removeCookie } from '../utils/lsc'; 
+import { setCookie, removeCookie, getCookie } from '../utils/lsc'; 
 export const GET_USERINFO = 'GET_USERINFO'; // Ajusta la importación del tipo de acción según tu implementación
 export const POST_USERINFO = 'POST_USERINFO';
 export const PUT_USERINFO = 'PUT_USERINFO';
@@ -22,13 +22,11 @@ export const login = (username, password) => async (dispatch) => {
         const data = await loginService(username, password);
         dispatch({ type: LOGIN_SUCCESS, payload: data });
 
-        // Guarda los tokens en cookies
+        // Guarda los tokens cifrados en cookies
         setCookie('token', data.token);
         setCookie('refreshToken', data.refreshToken);
 
-        // Guarda los tokens en localStorage
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('refreshToken', data.refreshToken);
+        // Opcional: Guarda los tokens en localStorage
     } catch (error) {
         dispatch({ type: LOGIN_FAILURE, payload: error.message });
     }
@@ -41,14 +39,10 @@ export const logout = () => (dispatch) => {
     // Elimina los tokens de las cookies
     removeCookie('token');
     removeCookie('refreshToken');
-
-    // Elimina los tokens del localStorage
-    localStorage.removeItem('token');
-    localStorage.removeItem('refreshToken');
 };
 
 export const getUserInfoById = () => async (dispatch) => {
-    const token = localStorage.getItem('token');
+    const token = getCookie('token')
     try {
         const userId = await getUserIdFromToken();
         if (!userId) {
@@ -73,8 +67,7 @@ export const getUserInfoById = () => async (dispatch) => {
 };
 
 export const postUserInfo = (data) => async (dispatch) => {
-    const token = localStorage.getItem('token');
-    console.log(token)
+    const token = getCookie('token')
     try {
         const response = await api.post(`userinfo/`, data, {
             headers: {
@@ -91,7 +84,7 @@ export const postUserInfo = (data) => async (dispatch) => {
 }
 
 export const updateUserInfo = (data, Id) => async (dispatch) => {
-    const token = localStorage.getItem('token');
+    const token = getCookie('token')
     try {
         const response = await api.put(`userinfo/${Id}`, data, {
             headers: {
@@ -108,7 +101,7 @@ export const updateUserInfo = (data, Id) => async (dispatch) => {
 }
 
 export const getUserBillingInfoById = () => async (dispatch) => {
-    const token = localStorage.getItem('token');
+    const token = getCookie('token')
     try {
         const userId = await getUserIdFromToken();
         if (!userId) {
@@ -133,7 +126,7 @@ export const getUserBillingInfoById = () => async (dispatch) => {
 };
 
 export const postUserBilling = (data) => async (dispatch) => {
-    const token = localStorage.getItem('token');
+    const token = getCookie('token')
     try {
         const response = await api.post('facturacion', data, {
             headers: {
@@ -150,7 +143,7 @@ export const postUserBilling = (data) => async (dispatch) => {
 }
 
 export const updateUserBillingInfo = (data, Id) => async (dispatch) => {
-    const token = localStorage.getItem('token');
+    const token = getCookie('token')
     try {
         const responseb = await api.put(`facturacion/${Id}`, data, {
             headers: {

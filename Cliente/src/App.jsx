@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { useTheme } from './contexts/themeContext';
 import Login from "./components/Login/Login";
@@ -10,7 +10,8 @@ import EditProfile from "./components/User/InfoUser";
 const App = () => {
   const { isDarkMode } = useTheme();
   const isAuthenticated = useSelector(state => state.isAuthenticated);
-  console.log(isAuthenticated)
+  const navigate = useNavigate(); // Hook para navegación programática
+
   useEffect(() => {
     if (isDarkMode) {
       document.body.classList.add('dark');
@@ -19,6 +20,13 @@ const App = () => {
     }
   }, [isDarkMode]);
 
+  useEffect(() => {
+    // Redirige al usuario a /login si no está autenticado
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
+
   return (
     <div className="min-h-screen flex flex-col">
       <CustomNavbar />
@@ -26,11 +34,10 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          {isAuthenticated && (
-          <>
-          <Route path="/perfil" element={<EditProfile/>}/>
-          </>
-          )}
+          {isAuthenticated &&
+            <Route path="/perfil" element={<EditProfile />} />
+
+          }
         </Routes>
       </div>
     </div>

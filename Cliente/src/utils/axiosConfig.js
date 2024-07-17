@@ -1,16 +1,14 @@
-// src/utils/axiosConfig.js
-
 import axios from 'axios';
+import { getCookie, setCookie, removeCookie } from './lsc'; // Ajusta la ruta según donde tengas definidas las funciones
 
-// Crear una instancia de Axios
 const api = axios.create({
     baseURL: 'http://localhost:3001/api',
+    withCredentials: true, // Permite el envío de cookies desde el cliente al servidor
 });
 
-// Configurar el interceptor de request
 api.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('token');
+        const token = getCookie('token'); // Obtén el token desde la cookie
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
         }
@@ -21,29 +19,30 @@ api.interceptors.request.use(
     }
 );
 
-// Configurar el interceptor de response
 api.interceptors.response.use(
     (response) => {
         return response;
     },
     async (error) => {
         const originalRequest = error.config;
-        console.log(originalRequest);
         if (error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
-            const refreshToken = localStorage.getItem('refreshToken');
+            const refreshToken = getCookie('refreshToken'); // Obtén el refreshToken desde la cookie
+
             if (refreshToken) {
                 try {
-                    const response = await api.post('/refresh-token', { refreshToken });
+                    const response = await api.post('/refresh-token', { refreshToken }, {
+                        withCredentials: true, // Asegúrate de enviar las cookies en la solicitud de refresco
+                    });
                     const { token } = response.data;
-                    localStorage.setItem('token', token);
+                    setCookie('token', token); // Guarda el nuevo token en la cookie
                     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                     return api(originalRequest);
                 } catch (error) {
-                    // Fallback to logout if refresh token fails
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('refreshToken');
-                    window.location.href = '/login'; // Redirect to login
+                    // Manejo de errores: redirigir al usuario a la página de inicio de sesión, por ejemplo
+                    removeCookie('token');
+                    removeCookie('refreshToken');
+                    window.location.href = '/login'; // Redirige al usuario a la página de inicio de sesión
                 }
             }
         }
