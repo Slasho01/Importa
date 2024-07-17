@@ -1,31 +1,23 @@
-import Cookies from 'js-cookie';
+// src/utils/cookieUtils.js
 
-const COOKIE_NAME = 'auth_token';
-
-export const setCookie = (token, options = {}) => {
-    Cookies.set(COOKIE_NAME, token, options);
+export const setCookie = (name, value, days = 7) => {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = `${name}=${value}; ${expires}; path=/`;
 };
 
-export const getCookie = () => {
-    return Cookies.get(COOKIE_NAME);
+export const getCookie = (name) => {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
 };
 
-export const removeCookie = () => {
-    Cookies.remove(COOKIE_NAME);
-};
-
-// localStorage.js
-
-const LOCAL_STORAGE_KEY = 'auth_token';
-
-export const setLocalStorage = (token) => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, token);
-};
-
-export const getLocalStorage = () => {
-    return localStorage.getItem(LOCAL_STORAGE_KEY);
-};
-
-export const removeLocalStorage = () => {
-    localStorage.removeItem(LOCAL_STORAGE_KEY);
+export const removeCookie = (name) => {
+    document.cookie = `${name}=; Max-Age=-99999999;`;
 };

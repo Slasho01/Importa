@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../contexts/authContext';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { login } from '../../redux/actions';
 import Input from '../UI/Input';
 import Button from '../UI/Button';
 
 const Login = () => {
-  const { login, token, error } = useAuth();
+  const dispatch = useDispatch();
+  const { token, error, loading } = useSelector(state => ({
+    token: state.token,
+    error: state.error,
+    loading: state.loading
+  }));
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(username, password);
+    dispatch(login(username, password));
   };
 
   if (token) {
@@ -25,8 +32,8 @@ const Login = () => {
           {/* Primer div */}
           <div className='bg-hero-pattern bg-cover bg-center p-8 sm:rounded-l-3xl py-8 px-8 w-full sm:max-w-md space-y-8 transform hover:-translate-y-1 hover:shadow-2xl transition duration-300 ease-in-out'>
             <div>
-             <h2 className='mt-6 text-center text-3xl font-extrabold font-sans text-gray-900'>Importa seguro Ltda</h2>
-             {/*<img src="./src/assets/pngegg.png" className='shadow-xl items-center content-center'/>*/}
+              <h2 className='mt-6 text-center text-3xl font-extrabold font-sans text-gray-900'>Importa seguro Ltda</h2>
+              {/*<img src="./src/assets/pngegg.png" className='shadow-xl items-center content-center'/>*/}
             </div>
           </div>
 
@@ -97,6 +104,7 @@ const Login = () => {
 
               <div>
                 <Button type='submit'>Ingresar</Button>
+                {loading && <p>Cargando...</p>}
               </div>
             </form>
           </div>

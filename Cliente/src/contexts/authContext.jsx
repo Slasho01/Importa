@@ -1,16 +1,17 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { loginService, logoutService } from '../services/authServices'; // Importa el servicio de autenticación
-import { jwtDecode } from "jwt-decode";
+import { loginService, logoutService } from '../services/authServices';
+import { jwtDecode } from 'jwt-decode';
+import Cookies from 'js-cookie';
 
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-    const [token, setToken] = useState(null);
+    const [token, setToken] = useState(Cookies.get('token') || null);
     const [error, setError] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false); // Nuevo estado para indicar si el usuario está autenticado
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const isTokenExpired = (token) => {
         if (!token) return true;
@@ -18,15 +19,20 @@ export const AuthProvider = ({ children }) => {
         return Date.now() >= exp * 1000;
     };
 
-    useEffect(() => {
-        const storedToken = localStorage.getItem('token');
+    const initializeAuth = () => {
+        const storedToken = Cookies.get('token');
         if (storedToken && !isTokenExpired(storedToken)) {
             setToken(storedToken);
-            setIsAuthenticated(true); // Establecer isAuthenticated a true si hay un token válido
+            setIsAuthenticated(true);
         } else {
-            localStorage.removeItem('token');
-            setIsAuthenticated(false); // Establecer isAuthenticated a false si no hay un token válido
+            setToken(null);
+            setIsAuthenticated(false);
+            Cookies.remove('token');
         }
+    };
+
+    useEffect(() => {
+        initializeAuth(); // Verificar token al cargar el componente
     }, []);
 
     const login = async (username, password) => {
@@ -34,9 +40,10 @@ export const AuthProvider = ({ children }) => {
         try {
             const data = await loginService(username, password);
             const { token } = data;
-            localStorage.setItem('token', token);
+            const expirationDate = new Date(jwtDecode(token).exp * 1000);
+            Cookies.set('token', token, { expires: expirationDate });
             setToken(token);
-            setIsAuthenticated(true); // Establecer isAuthenticated a true después de un inicio de sesión exitoso
+            setIsAuthenticated(true);
         } catch (error) {
             setError(error.response?.data?.error || 'Login failed');
         }
@@ -44,8 +51,9 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         logoutService();
+        Cookies.remove('token');
         setToken(null);
-        setIsAuthenticated(false); // Establecer isAuthenticated a false al cerrar sesión
+        setIsAuthenticated(false);
     };
 
     useEffect(() => {

@@ -1,12 +1,51 @@
 import axios from 'axios';
 import getUserIdFromToken from '../utils/jwtToken'; // Ajusta la ruta según donde tengas definida la función
+import { loginService, logoutService } from '../services/authServices';
+import { setCookie, removeCookie } from '../utils/lsc'; 
 export const GET_USERINFO = 'GET_USERINFO'; // Ajusta la importación del tipo de acción según tu implementación
 export const POST_USERINFO = 'POST_USERINFO';
 export const PUT_USERINFO = 'PUT_USERINFO';
 export const GET_BILLINGINFO = 'GET_BILLINGINFO';
 export const POST_BILLINGINFO = 'POST_BILLINGINFO';
 export const PUT_BILLINGINFO = 'PUT_BILLINGINFO';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const LOGOUT = 'LOGOUT';
 import api from '../utils/axiosConfig';
+
+
+export const login = (username, password) => async (dispatch) => {
+    dispatch({ type: LOGIN_REQUEST });
+
+    try {
+        const data = await loginService(username, password);
+        dispatch({ type: LOGIN_SUCCESS, payload: data });
+
+        // Guarda los tokens en cookies
+        setCookie('token', data.token);
+        setCookie('refreshToken', data.refreshToken);
+
+        // Guarda los tokens en localStorage
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('refreshToken', data.refreshToken);
+    } catch (error) {
+        dispatch({ type: LOGIN_FAILURE, payload: error.message });
+    }
+};
+
+export const logout = () => (dispatch) => {
+    logoutService();
+    dispatch({ type: LOGOUT });
+
+    // Elimina los tokens de las cookies
+    removeCookie('token');
+    removeCookie('refreshToken');
+
+    // Elimina los tokens del localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+};
 
 export const getUserInfoById = () => async (dispatch) => {
     const token = localStorage.getItem('token');

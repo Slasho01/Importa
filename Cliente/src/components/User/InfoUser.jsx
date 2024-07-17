@@ -8,11 +8,9 @@ import {
 import getUserIdFromToken from '../../utils/jwtToken';
 import Input from '../UI/Input';
 import Button from '../UI/Button';
-import { useAuth } from '../../contexts/authContext';
 
 const EditProfile = () => {
     const dispatch = useDispatch();
-    const { isAuthenticated } = useAuth();
     const userinfo = useSelector(state => state.userInfo);
     const userbilling = useSelector(state => state.userBilling);
     const [isEditing, setIsEditing] = useState(false);
@@ -38,12 +36,12 @@ const EditProfile = () => {
     });
 
     const [activeForm, setActiveForm] = useState('profile'); // Estado para controlar el formulario activo
-
+/*
     // Efecto para establecer isEditing basado en datos existentes
     useEffect(() => {
         setIsEditing(!userinfo.fullname || !userinfo.rut || !userinfo.birth_date); // Establecer isEditing a true si no hay datos
     }, [userinfo]);
-
+*/
     // Efectos para obtener datos del usuario y facturación
     useEffect(() => {
         dispatch(getUserInfoById());
@@ -101,6 +99,7 @@ const EditProfile = () => {
                     formData.userId = userId;
                     await dispatch(postUserInfo(formData));
                 }
+                window.location.reload();
             } else if (activeForm === 'billing') {
                 if (formDataB.userId) {
                     await dispatch(updateUserBillingInfo(formDataB, userbilling.id));
@@ -109,6 +108,7 @@ const EditProfile = () => {
                     formDataB.userId = userId;
                     await dispatch(postUserBilling(formDataB));
                 }
+                window.location.reload();
             }
             // Opcional: Actualizar localmente el estado para reflejar cambios sin recargar
         } catch (error) {

@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../redux/actions';
 import { useAuth } from '../../contexts/authContext'; // Importa el contexto de autenticación
 import { useTheme } from '../../contexts/themeContext';
 
 const CustomNavbar = () => {
-    const { token, logout } = useAuth();
+    const token = useSelector(state => state.token);
+    const dispatch = useDispatch();
     const { isDarkMode, toggleDarkMode } = useTheme();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+
     const handleLogout = () => {
-        logout(); // Función para cerrar sesión
-    
-        // Redirige al usuario a la página de inicio
-        window.location.href = '/';
+        dispatch(logout()); // Dispatch la acción de logout
     };
 
     const toggleMenu = () => {
