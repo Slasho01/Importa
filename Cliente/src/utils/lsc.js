@@ -12,7 +12,6 @@ export const decryptData = (encryptedData, key) => {
     const bytes = CryptoJS.AES.decrypt(encryptedData, key);
     return bytes.toString(CryptoJS.enc.Utf8);
 };
-
 // Función para establecer cookie cifrada
 export const setCookie = (name, value, days = 7) => {
     const secretKey = key; // Reemplaza con una clave segura

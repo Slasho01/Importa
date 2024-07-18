@@ -17,6 +17,7 @@ const getPreAlertaByUserHandler = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
 const getPreAlertaDetailsHandler = async (req, res) => {
   const { id } = req.params;
   try {

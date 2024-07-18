@@ -6,11 +6,11 @@ import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import CustomNavbar from "./components/Nav/Nav";
 import EditProfile from "./components/User/InfoUser";
+import PreAlerta from "./components/Pre-Alerta/PreAlerta";
+import ProtectedRoute from "./components/UI/ProtectedRoute";
 
 const App = () => {
   const { isDarkMode } = useTheme();
-  const isAuthenticated = useSelector(state => state.isAuthenticated);
-  const navigate = useNavigate(); // Hook para navegación programática
 
   useEffect(() => {
     if (isDarkMode) {
@@ -20,13 +20,6 @@ const App = () => {
     }
   }, [isDarkMode]);
 
-  useEffect(() => {
-    // Redirige al usuario a /login si no está autenticado
-    if (!isAuthenticated) {
-      navigate('/login');
-    }
-  }, [isAuthenticated, navigate]);
-
   return (
     <div className="min-h-screen flex flex-col">
       <CustomNavbar />
@@ -34,10 +27,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          {isAuthenticated &&
-            <Route path="/perfil" element={<EditProfile />} />
-
-          }
+          <Route path="/perfil" element={<ProtectedRoute element={<EditProfile />} />} />
+          <Route path="/prealertas" element={<ProtectedRoute element={<PreAlerta />} />} />
         </Routes>
       </div>
     </div>

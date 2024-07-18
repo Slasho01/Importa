@@ -7,7 +7,7 @@ const {
 } = require('../handlers/preAlertaHandler')
 const preAlertaRoute = Router();
 
-preAlertaRoute.get("/", getPreAlertaByUserHandler);
+preAlertaRoute.post("/", getPreAlertaByUserHandler);
 preAlertaRoute.get("/:id", getPreAlertaDetailsHandler);
 preAlertaRoute.post("/", createPreAlertaHandler);
 preAlertaRoute.put("/:id", updatePreAlertaHandler);

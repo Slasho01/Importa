@@ -1,20 +1,23 @@
 // reducers.js
 import {
   GET_BILLINGINFO, GET_USERINFO,
-  POST_BILLINGINFO, POST_USERINFO,
-  PUT_BILLINGINFO, PUT_USERINFO,
+  GET_PREALERTAS, GET_PREALERTADETAILS,
   LOGIN_REQUEST, LOGIN_SUCCESS,
-  LOGIN_FAILURE, LOGOUT
+  LOGIN_FAILURE, LOGOUT,
+  POST_BILLINGINFO, POST_USERINFO,
+  POST_PREALERTA, PUT_BILLINGINFO,
+  PUT_USERINFO, PUT_PREALERTA
 } from "./actions";
 // Asegúrate de declarar las variables antes de usarlas
 const initialState = {
-  userInfo: [],
   userBilling: [],
+  userInfo: [],
+  error: null,
   isAuthenticated: false,
-  token: null,
-  refreshToken: null,
   loading: false,
-  error: null
+  refreshToken: null,
+  token: null,
+  preAlerta: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -79,6 +82,26 @@ const reducer = (state = initialState, action) => {
         ...state,
         userBilling: action.payload
       };
+    case GET_PREALERTAS:
+      return {
+        ...state,
+        preAlerta: action.payload
+      };
+    case GET_PREALERTADETAILS:
+      return {
+        ...state,
+        preAlerta: action.payload
+      };
+    case POST_PREALERTA:
+      return {
+        ...state,
+        preAlerta: action.payload
+      }
+    case PUT_PREALERTA:
+      return {
+        ...state,
+        preAlerta: action.payload
+      }
     default:
       return state;
   }

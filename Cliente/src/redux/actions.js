@@ -12,6 +12,10 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT = 'LOGOUT';
+export const GET_PREALERTAS = 'GET_PREALERTAS';
+export const GET_PREALERTADETAILS = 'GET_PREALERTADETAILS';
+export const POST_PREALERTA = 'POST_PREALERTA';
+export const PUT_PREALERTA = 'PUT_PREALERTA';
 import api from '../utils/axiosConfig';
 
 
@@ -35,8 +39,6 @@ export const login = (username, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
     logoutService();
     dispatch({ type: LOGOUT });
-
-    // Elimina los tokens de las cookies
     removeCookie('token');
     removeCookie('refreshToken');
 };
@@ -153,6 +155,88 @@ export const updateUserBillingInfo = (data, Id) => async (dispatch) => {
         dispatch({
             type: PUT_BILLINGINFO,
             payload: responseb.data
+        })
+    } catch (error) {
+        console.error('Error al obtener datos:', error.message);
+    }
+}
+
+export const getPreAlertas = () => async (dispatch) => {
+    const token = getCookie('token')
+    try {
+        const userId = await getUserIdFromToken();
+        if (!userId) {
+            console.error('No se pudo obtener el ID del usuario');
+            return;
+        }
+        if (!token) {
+            throw new Error('Token de sesión no disponible');
+        }
+        const response = await api.post(`prealertas`, { userId }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        dispatch({
+            type: GET_PREALERTAS,
+            payload: response.data
+        });
+    } catch (error) {
+        console.error('Error al obtener datos:', error.message);
+    }
+}
+
+export const getPreAlertasById = (id) => async(dispatch) =>{
+    const token = getCookie();
+    try {
+        if(!token){
+            throw new Error('Token de sessión no disponible');
+        }
+        const response = await api.get(`prealertas/${id}`, {
+                headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        dispatch({
+            type: GET_PREALERTADETAILS,
+            payload: response.data
+        })
+    } catch (error) {
+        console.error('Error al obtener datos:', error.message);
+    }
+}
+
+export const postPreAlerta = (data) => async(dispatch) =>{
+    const token = getCookie();
+    try {
+        if(!tplem){
+            throw new Error('Token de sessión no disponible');
+        }
+        const response = await api.post(`prealertas/`, data, {
+            headers:{
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        dispatch({
+            type: POST_PREALERTA,
+            payload: response.data
+        })
+    } catch (error) {
+        console.error('Error al obtener datos:', error.message);
+    }
+}
+
+export const putPreAlerta = (data, id) => async(dispatch) => {
+    const token = getCookie('token')
+    try {
+        const response = await api.put(`prealertas/${id}`, data, {
+            headers:{
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        dispatch({
+            type: PUT_PREALERTA,
+            payload: response.data
         })
     } catch (error) {
         console.error('Error al obtener datos:', error.message);

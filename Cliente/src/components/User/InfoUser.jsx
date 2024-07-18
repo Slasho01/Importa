@@ -5,7 +5,6 @@ import {
     postUserInfo, postUserBilling,
     updateUserBillingInfo, updateUserInfo
 } from '../../redux/actions';
-import getUserIdFromToken from '../../utils/jwtToken';
 import Input from '../UI/Input';
 import Button from '../UI/Button';
 
