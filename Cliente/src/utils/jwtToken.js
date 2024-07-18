@@ -1,7 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import { getCookie } from "./lsc"
 // Función para obtener el ID del usuario desde un token JWT
-const getUserIdFromToken = async () => {
+export const getUserIdFromToken = async () => {
     const token = getCookie('token'); // Obtén el token JWT de localStorage
     if (token) {
         try {

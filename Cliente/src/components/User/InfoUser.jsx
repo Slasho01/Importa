@@ -5,6 +5,7 @@ import {
     postUserInfo, postUserBilling,
     updateUserBillingInfo, updateUserInfo
 } from '../../redux/actions';
+import { getUserIdFromToken } from '../../utils/jwtToken.js';
 import Input from '../UI/Input';
 import Button from '../UI/Button';
 
@@ -35,12 +36,12 @@ const EditProfile = () => {
     });
 
     const [activeForm, setActiveForm] = useState('profile'); // Estado para controlar el formulario activo
-/*
+
     // Efecto para establecer isEditing basado en datos existentes
     useEffect(() => {
-        setIsEditing(!userinfo.fullname || !userinfo.rut || !userinfo.birth_date); // Establecer isEditing a true si no hay datos
+        setIsEditing(!userinfo || !userinfo.fullname || !userinfo.rut || !userinfo.birth_date); // Establecer isEditing a true si no hay datos
     }, [userinfo]);
-*/
+
     // Efectos para obtener datos del usuario y facturación
     useEffect(() => {
         dispatch(getUserInfoById());
@@ -137,23 +138,23 @@ const EditProfile = () => {
                                 <div>
                                     <label htmlFor="fullname">Nombre completo:</label>
                                     <Input
-                                        disabled={!isEditing}
                                         type="text"
                                         id="fullname"
                                         name="fullname"
                                         value={formData.fullname}
                                         onChange={handleChange}
+                                        disabled={!isEditing}
                                     />
                                 </div>
                                 <div>
                                     <label htmlFor="rut">Rut:</label>
                                     <Input
-                                        disabled={!isEditing}
                                         type="text"
                                         id="rut"
                                         name="rut"
                                         value={formData.rut}
                                         onChange={handleChange}
+                                        disabled={!isEditing}
                                     />
                                 </div>
                                 <div>
@@ -179,12 +180,12 @@ const EditProfile = () => {
                                 <div>
                                     <label htmlFor="birth_date">Fecha de nacimiento:</label>
                                     <Input
-                                        disabled={!isEditing}
                                         type="date"
                                         id="birth_date"
                                         name="birth_date"
                                         value={formData.birth_date}
                                         onChange={handleChange}
+                                        disabled={!isEditing}
                                     />
                                 </div>
                                 <Button type="submit">Guardar</Button>
