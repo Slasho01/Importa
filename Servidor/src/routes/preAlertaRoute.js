@@ -9,6 +9,6 @@ const preAlertaRoute = Router();
 
 preAlertaRoute.post("/", getPreAlertaByUserHandler);
 preAlertaRoute.get("/:id", getPreAlertaDetailsHandler);
-preAlertaRoute.post("/", createPreAlertaHandler);
+preAlertaRoute.post("/post", createPreAlertaHandler);
 preAlertaRoute.put("/:id", updatePreAlertaHandler);
 module.exports = preAlertaRoute;

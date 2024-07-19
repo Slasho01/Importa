@@ -31,6 +31,7 @@ const getPreAlertaDetailsController = async (id) => {
 
 const createPreAlertaController = async (data) => {
   try {
+    console.log("Hola")
     const createPrealerta = await PreAlerta.create(data);
     return "Se creo exitosamente la Pre-Alerta";
   } catch (error) {

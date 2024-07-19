@@ -209,10 +209,10 @@ export const getPreAlertasById = (id) => async(dispatch) =>{
 export const postPreAlerta = (data) => async(dispatch) =>{
     const token = getCookie();
     try {
-        if(!tplem){
+        if(!token){
             throw new Error('Token de sessión no disponible');
         }
-        const response = await api.post(`prealertas/`, data, {
+        const response = await api.post(`prealertas/post`, data, {
             headers:{
                 'Authorization': `Bearer ${token}`
             }
