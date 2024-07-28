@@ -187,7 +187,7 @@ export const getPreAlertas = () => async (dispatch) => {
 }
 
 export const getPreAlertasById = (id) => async(dispatch) =>{
-    const token = getCookie();
+    const token = getCookie('token');
     try {
         if(!token){
             throw new Error('Token de sessión no disponible');
@@ -207,7 +207,7 @@ export const getPreAlertasById = (id) => async(dispatch) =>{
 }
 
 export const postPreAlerta = (data) => async(dispatch) =>{
-    const token = getCookie();
+    const token = getCookie('token');
     try {
         if(!token){
             throw new Error('Token de sessión no disponible');

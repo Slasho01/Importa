@@ -1,8 +1,9 @@
 import React from 'react';
 
-const PreAlertaComponent = ({ date, origen, destino, peso, volumen, status }) => {
+const PreAlertaComponent = ({ id, date, origen, destino, peso, volumen, status }) => {
     return (
         <tr>
+            <td className="py-3 px-6 text-left align-middle">{id}</td>
             <td className="py-3 px-6 text-left align-middle">{date}</td>
             <td className="py-3 px-6 text-left align-middle">{origen}</td>
             <td className="py-3 px-6 text-left align-middle">{destino}</td>

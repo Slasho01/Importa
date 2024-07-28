@@ -1,11 +1,11 @@
 const { DataTypes } = require('sequelize');
-
+const cuid = require('cuid');
 module.exports = (sequelize) => {
   sequelize.define('PreAlerta', {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       primaryKey: true,
-      autoIncrement: true,
+      defaultValue: () => cuid(),
     },
     date: {
       type: DataTypes.DATEONLY,
