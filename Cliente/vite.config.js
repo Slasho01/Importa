@@ -5,7 +5,6 @@ import tailwindcss from 'tailwindcss';
 
 export default defineConfig({
   build: {
-    outDir: 'build',
     sourcemap: true
   },
   plugins: [
